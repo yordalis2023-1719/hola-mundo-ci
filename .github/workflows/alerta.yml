@@ -1,0 +1,24 @@
+name: Notificación al subir a main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  enviar-alerta:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Ejecutar el programa (opcional)
+        run: node hola.js
+
+      - name: Enviar notificación a ntfy.sh
+        run: |
+          curl -H "Title: Nueva actualización en main" \
+               -H "Priority: high" \
+               -d "Se ha hecho un push a la rama main en el repositorio ${{ github.repository }}" \
+               https://ntfy.sh/devops-itla
